@@ -24,9 +24,7 @@ class Gneex
 
     public static function checkDB()
     {
-        $sql = "SELECT `id` FROM `options` WHERE `name` = 'gneex_options' ";
-        $q = Db::query($sql);
-        if ($q->num_rows > 0) {
+        if (Options::isExist('gneex_options')) {
             return true;
         } else {
             return false;
@@ -278,8 +276,7 @@ class Gneex
             });
         </script>
         ';
-
-        echo Site::minifyJS($js);
+        System::adminAsset(Site::minifyJS($js));
     }
 }
 

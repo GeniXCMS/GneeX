@@ -19,6 +19,8 @@ $gneex = Gneex::$opt;
                 <?php
                 if (Gneex::opt('adsense') != '') {
                     echo '<div class="row"><div class="col-md-12">'.Gneex::opt('adsense').'</div></div><hr />';
+                } else {
+                    echo '<div class="col-md-12">&nbsp;</div>';
                 }
                 ?>
                 <?php
@@ -33,17 +35,16 @@ $gneex = Gneex::$opt;
                                 $im = '<img src="'.Url::thumb('assets/images/noimage.png', '', 300).'" class="img-responsive">';
                             }
                             echo '
-                            <article class="blog-post magazine col-md-12">
-                            <div class="col-md-4">
+                            <article class="blog-post magazine col-md-12 clearfix">
+                            <div class="col-sm-4 col-md-4">
                             '.$im.'
                             </div>
-                            <div class="col-md-8">
-                                <h3><a href="'.Url::post($p->id).'\">'.$p->title.'</a></h3>
-                                <div class="blog-meta">published at '.Date::format($p->date, 'd M Y')." by <a href=\"#\">{$p->author}</a></div>
+                            <div class="col-sm-8 col-md-8">
+                                <h3><a href="'.Url::post($p->id).'">'.$p->title.'</a></h3>
+                                <div class="blog-meta"><small>published at '.Date::format($p->date, 'd M Y')." by <a href=\"#\">{$p->author}</a></small><br /><br /></div>
                                 ".substr(Typo::strip(Posts::content($p->content)), 0, 350).'
-                               
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-sm-12 col-md-12 clearfix">
                                 <hr />
                             </div>
                             </article>
