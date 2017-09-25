@@ -30,6 +30,29 @@ if (isset($_POST['installdb'])) {
             'font_color_header' => '#fff',
             'container_width' => '1280',
             'category_layout' => 'blog',
+            'body_background_color' => '',
+            'link_color' => '',
+            'link_color_hover' => '',
+            'background_footer' => '',
+            'link_color_footer' => '',
+            'sidebar_background_color_header' => '',
+            'sidebar_font_color_header' => '',
+            'sidebar_border_width' => '',
+            'sidebar_border_color' => '',
+            'sidebar_font_color_body' => '',
+            'content_border_width' => '',
+            'content_border_color' => '',
+            'content_background_color_body' => '',
+            'fullwidth_page' => '',
+            'background_footer' => '',
+            'link_color_footer' => '',
+            'content_font_color_body' => '',
+            'content_title_size' => '',
+            'content_title_cat_size' => '',
+            'content_title_color' => '',
+            'content_title_color_hover' => '',
+            'list_title_color' => '',
+            'list_title_size' => ''
         );
     $opt = array(
             'gneex_options' => json_encode($arr),
@@ -39,10 +62,11 @@ if (isset($_POST['installdb'])) {
 
 if (isset($_POST['gneex_options_update'])) {
     unset($_POST['gneex_options_update']);
-    $opt = array();
+    $opt = [];
     foreach ($_POST as $k => $v) {
         // $opt[$k] = urlencode($v);
-        $opt[$k] = Typo::jsonFormat($v);
+        // $opt[$k] = Typo::jsonFormat($v);
+        $opt[$k] = $v;
         // echo $opt[$k];
     }
 
@@ -53,41 +77,60 @@ if (isset($_POST['gneex_options_update'])) {
 
 ?>
 <form action="" method="post">
-<div class="row">
-    <div class="col-md-12">
-        <h2>GneeX Theme <small >v1.0.0</small>
+ <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-brush"></i>  GneeX Theme <small >v1.1.2</small>
+
             <button class="pull-right btn btn-success" type="submit" name="gneex_options_update">
                 Change
             </button>
-        </h2>
-        
-        <hr />
-    </div>
-    
+        </h1>
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    
+                </h3>
+
+                <div class="box-tools pull-right">
+
+                </div>
+            </div>
+            <div class="box-body">
 <?php
 
 
 if (Gneex::checkDB()) {
     $opt = Options::get('gneex_options');
-    // $opt = utf8_encode($opt);
+    $opt = Typo::Xclean($opt);
     // var_dump($opt);
 
     $opt = json_decode($opt, true);
-
+    // print_r($opt);
     if (is_array($opt)) {
-        $o = array();
+        $o = [];
         foreach ($opt as $k => $v) {
             // $o[$k] = urldecode($v);
             $o[$k] = $v;
         }
-    } ?>
+    } 
+
+?>
     <div class="col-md-3">
         <ul class="nav nav-pills nav-stacked" id="myTabs">
             <li role="presentation" class="active"><a href="#home"><i class="fa fa-home"></i> Home</a></li>
             <li role="presentation"><a href="#intro"><i class="fa fa-asterisk"></i> Intro</a></li>
             <li role="presentation"><a href="#headerfooter"><i class="fa fa-bars"></i> Header & Footer</a></li>
             <li role="presentation"><a href="#frontpage"><i class="fa fa-desktop"></i> Frontpage</a></li>
-            <li role="presentation"><a href="#layout"><i class="fa fa-desktop"></i> Global Layout</a></li>
+            <li role="presentation"><a href="#layout"><i class="fa fa-th-large"></i> Global Layout</a></li>
+            <li role="presentation"><a href="#style"><i class="fa fa-paint-brush"></i> Styles</a></li>
             <li role="presentation"><a href="#codes"><i class="fa fa-code"></i> Codes</a></li>
         </ul>
     </div>
@@ -100,7 +143,7 @@ if (Gneex::checkDB()) {
                 <div class="alert alert-info">This is our official release of customized themes. <br />
                 This theme was developed to give you chance to create great
                 website with GeniXCMS.</div>
-                <p>Have any suggestions or advice ? please don't hesitate to contact us at info@genixcms.com</p>
+                <p>Have any suggestions or advice ? please don't hesitate to contact us at info@genix.id</p>
                 <p>Or you can submit issue or pull request at <a href="https://github.com/GeniXCMS/GneeX" target="_blank">here <i class="fa fa-external-link"></i></a> </p>
             </div>
 
@@ -134,7 +177,30 @@ if (Gneex::checkDB()) {
 
 
             <div role="tabpanel" class="tab-pane" id="frontpage">
-                <div class="col-md-6">
+                <div class="col-md-12">
+                <h4>Featured Posts</h4>
+                <hr />
+                    <div class="form-group">
+                        <label>Featured Posts</label>
+                        <input type="text" name="featured_posts" class="form-control" value="<?=$o['featured_posts']; ?>">
+                        <small>Type the ID of the posts to be featured. comma <kbd>,</kbd> separated.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Featured Background Image</label>
+                        <input type="text" name="background_featured" class="form-control" value="<?=$o['background_featured']; ?>">
+                        <small>url of the image for your featured background</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Featured Background Color</label>
+                        <div class="input-group colorpicker-component" id="background_color_featured">
+                            <input type="text" name="background_color_featured" class="form-control" value="<?=$o['background_color_featured']; ?>">
+                            <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                        </div>
+                        <small>color of the featured background</small>
+                    </div>
+                <hr />
+                </div>
+                <div class="col-md-12">
             
                 <h4>Frontpage</h4>
                 <hr />
@@ -155,7 +221,7 @@ if (Gneex::checkDB()) {
                             </div>
                         </div>
                         <div id="fullwidth">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <select name="fullwidth_page" class="form-control">
                                     <?=Gneex::optionPost('page', $o['fullwidth_page']);?>
                                 </select>
@@ -270,29 +336,7 @@ if (Gneex::checkDB()) {
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                <h4>Featured Posts</h4>
-                <hr />
-                    <div class="form-group">
-                        <label>Featured Posts</label>
-                        <input type="text" name="featured_posts" class="form-control" value="<?=$o['featured_posts']; ?>">
-                        <small>Type the ID of the posts to be featured. comma <kbd>,</kbd> separated.</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Featured Background Image</label>
-                        <input type="text" name="background_featured" class="form-control" value="<?=$o['background_featured']; ?>">
-                        <small>url of the image for your featured background</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Featured Background Color</label>
-                        <div class="input-group colorpicker-component" id="background_color_featured">
-                            <input type="text" name="background_color_featured" class="form-control" value="<?=$o['background_color_featured']; ?>">
-                            <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
-                        </div>
-                        <small>color of the featured background</small>
-                    </div>
-                <hr />
-                </div>
+                
             </div>
 
 
@@ -300,7 +344,7 @@ if (Gneex::checkDB()) {
 
             
             <div role="tabpanel" class="tab-pane" id="headerfooter">
-                <div class="col-md-6">
+                <div class="col-md-12">
                 <h4>Header</h4>
                 <hr />
                     <div class="form-group">
@@ -332,7 +376,7 @@ if (Gneex::checkDB()) {
                     </div>
                 <hr />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                 <h4>Footer</h4>
                 <hr />
                     <div class="form-group">
@@ -377,7 +421,239 @@ if (Gneex::checkDB()) {
             </div>
 
 
+            <div role="tabpanel" class="tab-pane" id="style">
+                <div class="col-md-12">
+                    <h4>Body</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Body Background Color</label>
+                                <div class="input-group colorpicker-component" id="body_background_color">
+                                    <input type="text" name="body_background_color" class="form-control" value="<?=$o['body_background_color']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the body background</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Link Color</label>
+                                <div class="input-group colorpicker-component" id="link_color">
+                                    <input type="text" name="link_color" class="form-control" value="<?=$o['link_color']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the link</small>
+                            </div>
+                        </div>
 
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Link Color Hover</label>
+                                <div class="input-group colorpicker-component" id="link_color_hover">
+                                    <input type="text" name="link_color_hover" class="form-control" value="<?=$o['link_color_hover']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the body background</small>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h4>Sidebar</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Sidebar Header Background Color</label>
+                                <div class="input-group colorpicker-component" id="sidebar_background_color_header">
+                                    <input type="text" name="sidebar_background_color_header" class="form-control" value="<?=$o['sidebar_background_color_header']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the sidebar header background</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Sidebar Header Font Color</label>
+                                <div class="input-group colorpicker-component" id="sidebar_font_color_header">
+                                    <input type="text" name="sidebar_font_color_header" class="form-control" value="<?=$o['sidebar_font_color_header']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the sidebar header fonts</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Sidebar Body Background Color</label>
+                                <div class="input-group colorpicker-component" id="sidebar_background_color_body">
+                                    <input type="text" name="sidebar_background_color_body" class="form-control" value="<?=$o['sidebar_background_color_body']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the sidebar body background</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Sidebar Body Font Color</label>
+                                <div class="input-group colorpicker-component" id="sidebar_font_color_body">
+                                    <input type="text" name="sidebar_font_color_body" class="form-control" value="<?=$o['sidebar_font_color_body']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the sidebar body fonts</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Sidebar Border Width</label>
+                                <input type="text" name="sidebar_border_width" class="slider form-control" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="<?=$o['sidebar_border_width'];?>" data-slider-orientation="horizontal" value="<?=$o['sidebar_border_width'];?>" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="red">
+                                <small>Current Width : <span id="containerWidthSliderVal"><?=$o['sidebar_border_width']; ?></span></small>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Sidebar Border Color</label>
+                                <div class="input-group colorpicker-component" id="sidebar_border_color">
+                                    <input type="text" name="sidebar_border_color" class="form-control" value="<?=$o['sidebar_border_color']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the sidebar border color</small>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <h4>Content</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Content Border Width</label>
+                                <input type="text" name="content_border_width" class="slider form-control" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="<?=$o['content_border_width'];?>" data-slider-orientation="horizontal" value="<?=$o['content_border_width'];?>" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="red">
+                                <small>Current Width : <span id="containerWidthSliderVal"><?=$o['content_border_width']; ?></span></small>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Content Border Color</label>
+                                <div class="input-group colorpicker-component" id="content_border_color">
+                                    <input type="text" name="content_border_color" class="form-control" value="<?=$o['content_border_color']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the sidebar border color</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Content Body Background Color</label>
+                                <div class="input-group colorpicker-component" id="content_background_color_body">
+                                    <input type="text" name="content_background_color_body" class="form-control" value="<?=$o['content_background_color_body']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the content body background</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Content Body Font Color</label>
+                                <div class="input-group colorpicker-component" id="content_font_color_body">
+                                    <input type="text" name="content_font_color_body" class="form-control" value="<?=$o['content_font_color_body']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the content body fonts</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Content Title Single Size </label>
+                                <input type="text" name="content_title_size" class="slider form-control" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="<?=$o['content_title_size'];?>" data-slider-orientation="horizontal" value="<?=$o['content_title_size'];?>" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="red">
+                                <small>Current Size : <span id="containerWidthSliderVal"><?=$o['content_title_size']; ?></span></small>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Content Title Cat/Tag/Author Size </label>
+                                <input type="text" name="content_title_cat_size" class="slider form-control" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="<?=$o['content_title_cat_size'];?>" data-slider-orientation="horizontal" value="<?=$o['content_title_cat_size'];?>" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="red">
+                                <small>Current Size : <span id="containerWidthSliderVal"><?=$o['content_title_cat_size']; ?></span></small>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Content Title Color</label>
+                                <div class="input-group colorpicker-component" id="content_title_color">
+                                    <input type="text" name="content_title_color" class="form-control" value="<?=$o['content_title_color']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the sidebar border color</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Content Title Color Hover</label>
+                                <div class="input-group colorpicker-component" id="content_title_color_hover">
+                                    <input type="text" name="content_title_color_hover" class="form-control" value="<?=$o['content_title_color_hover']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the content title hover color</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>List Title Color</label>
+                                <div class="input-group colorpicker-component" id="list_title_color">
+                                    <input type="text" name="list_title_color" class="form-control" value="<?=$o['list_title_color']; ?>">
+                                    <span class="input-group-addon"><i>&nbsp;&nbsp;&nbsp;</i></span>
+                                </div>
+                                <small>color of the sidebar border color</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>List Title Size</label>
+                                <input type="text" name="list_title_size" class="slider form-control" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="<?=$o['list_title_size'];?>" data-slider-orientation="horizontal" value="<?=$o['list_title_size'];?>" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="red">
+                                <small>Current Size : <span id="containerWidthSliderVal"><?=$o['list_title_size']; ?></span></small>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
 
             <div role="tabpanel" class="tab-pane" id="layout">
                 <div class="col-md-6">
@@ -385,12 +661,9 @@ if (Gneex::checkDB()) {
                 <hr />
                     <div class="form-group">
                         <label>Container Width</label>
-                        <div class="input-group">
-                        <input id="containerWidth" name="container_width" data-slider-id='containerWidthSlider' type="text" data-slider-min="640" data-slider-max="1300" data-slider-step="1" data-slider-value="<?=$o['container_width'];
-?>" value="<?=$o['container_width'];
-?>" />&nbsp;&nbsp;&nbsp;<span id="containerWidthCurrentSliderValLabel">Current Width : <span id="containerWidthSliderVal"><?=$o['container_width']; ?></span></span>
-                        </div>
-                        <small>container width</small>
+                        <input type="text" name="container_width" class="slider form-control" data-slider-min="0" data-slider-max="1300" data-slider-step="1" data-slider-value="<?=$o['container_width'];?>" data-slider-orientation="horizontal" value="<?=$o['container_width'];?>" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="red">
+                         <small>Current Width : <span id="containerWidthSliderVal"><?=$o['container_width']; ?></span></small>
+
                     </div>
                 <hr />
                     <div class="form-group">
@@ -460,5 +733,14 @@ if (Gneex::checkDB()) {
         ';
 }
 ?>
-</div>
+            </div>
+            <!-- /.box-body -->
+<!--            <div class="box-footer">-->
+<!---->
+<!--            </div>-->
+            <!-- /.box-footer-->
+        </div>
+        <!-- /.box -->
+
+    </section>
 </form>

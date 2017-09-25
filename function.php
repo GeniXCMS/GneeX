@@ -27,7 +27,7 @@ class Gneex
 
     public static function checkDB()
     {
-        if (Options::isExist('gneex_options')) {
+        if (Options::validate('gneex_options')) {
             return true;
         } else {
             return false;
@@ -118,10 +118,23 @@ class Gneex
 
     public static function introIg($url)
     {
-        $dom = explode('/', $url);
-        if (strpos($dom[2], 'youtube') || strpos($dom[2], 'youtu.be')) {
-            $hash = (strpos($dom[2], 'youtu.be')) ? $dom[3] : str_replace('watch?v=', '', $dom[3]);
+        
+        if (strpos($url, 'youtube') || strpos($url, 'youtu.be')) {
+            if (strpos($url, 'youtube')) {
+                parse_str( parse_url( $url, PHP_URL_QUERY ), $dom );
+            } else {
+                $dom = explode('/', $url);
+            }
+
+            $hash = (strpos($url, 'youtu.be')) ? $dom[3] : $dom['v'];
             $html = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$hash.'?rel=0&amp;controls=0&amp;showinfo=0" class="center-block" frameborder="0" allowfullscreen></iframe>';
+        } elseif(strpos($url, 'vimeo')) {
+            $dom = explode('/', $url);
+            $html = '<iframe src="https://player.vimeo.com/video/'.$dom[3].'?byline=0&portrait=0" width="640" height="267" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+        } elseif(strpos($url, 'dailymotion') || strpos($url, 'dai.ly')) {
+            $dom = explode('/', $url);
+            $hash = (strpos($url, 'dai.ly')) ? $dom[3]: $dom[4];
+            $html = '<iframe frameborder="0" width="480" height="270" src="//www.dailymotion.com/embed/video/'.$hash.'" allowfullscreen></iframe>';
         } else {
             $html = '<img src="'.$url.'" class="img-responsive center-block">';
         }
@@ -142,8 +155,17 @@ class Gneex
         <link href="'.Site::$url.'inc/themes/gneex/css/style.css" rel="stylesheet">
         <style>';
         $css .= '
+        body {
+            background-color: '.$opt['body_background_color'].';
+        }
         .container {
             max-width: '.$opt['container_width'].'px;
+        }
+        a {
+            color: '.$opt['link_color'].';
+        }
+        a:hover {
+            color: '.$opt['link_color_hover'].';
         }
         ';
         $css .= '
@@ -222,6 +244,43 @@ class Gneex
         }
         ';
         $css .= '
+        .panel.panel-red .panel-heading, .panel.panel-red .panel-body {
+            background-color: '.$opt['sidebar_background_color_header'].';
+            color: '.$opt['sidebar_font_color_header'].';
+        }
+        .panel.panel-red {
+            border: '.$opt['sidebar_border_width'].'px solid '.$opt['sidebar_border_color'].';    
+        }
+        .panel.panel-red .panel-body a {
+            color: '.$opt['sidebar_font_color_body'].';
+        }
+        ';
+        $css .= '
+        .blog-lists {
+            border: '.$opt['content_border_width'].'px solid '.$opt['content_border_color'].';
+            background-color: '.$opt['content_background_color_body'].';
+            color: '.$opt['content_font_color_body'].';
+        }
+        article h2.title {
+            font-size: '.$opt['content_title_size'].'px;
+            color: '.$opt['content_title_color'].';
+        }
+        article h3.title {
+            font-size: '.$opt['content_title_cat_size'].'px;
+            color: '.$opt['content_title_color'].';
+        }
+        article h3.title a, article h2.title a {
+            color: '.$opt['content_title_color'].';
+        }
+        article h3.title a:hover, article h2.title a:hover {
+            color: '.$opt['content_title_color_hover'].';
+        }
+        h2.category-title {
+            font-size: '.$opt['list_title_size'].'px;
+            color: '.$opt['list_title_color'].';
+        }
+        ';
+        $css .= '
         </style>
         ';
 
@@ -234,7 +293,7 @@ class Gneex
         $js = '
 
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/css/bootstrap-colorpicker.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">-->
         <style>
             #containerWidthSlider .slider-selection {
                 background: #BABABA;
@@ -242,9 +301,10 @@ class Gneex
         </style>
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/js/bootstrap-colorpicker.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>-->
         <script>
             $(function() {
+                $(\'#body_background_color\').colorpicker();
                 $(\'#background_color_header\').colorpicker();
                 $(\'#background_color_footer\').colorpicker();
                 $(\'#background_color_featured\').colorpicker();
@@ -259,6 +319,19 @@ class Gneex
                 $(\'#font_color_header\').colorpicker();
                 $(\'#font_color_footer\').colorpicker();
                 $(\'#link_color_footer\').colorpicker();
+                $(\'#sidebar_background_color_header\').colorpicker();
+                $(\'#sidebar_font_color_header\').colorpicker();
+                $(\'#sidebar_border_color\').colorpicker();
+                $(\'#sidebar_background_color_body\').colorpicker();
+                $(\'#sidebar_font_color_body\').colorpicker();
+                $(\'#content_border_color\').colorpicker();
+                $(\'#content_background_color_body\').colorpicker();
+                $(\'#content_font_color_body\').colorpicker();
+                $(\'#content_title_color\').colorpicker();
+                $(\'#content_title_color_hover\').colorpicker();
+                $(\'#link_color\').colorpicker();
+                $(\'#link_color_hover\').colorpicker();
+                $(\'#list_title_color\').colorpicker();
             });
             $(\'#myTabs a\').click(function (e) {
               e.preventDefault();
@@ -299,7 +372,7 @@ class Gneex
     public static function postParam($data)
     {
 //        print_r($data);
-        $bar = Posts::getParam('sidebar', $data[0]['post'][0]->id);
+        $bar = isset($data[0]['post'][0]->id) ? Posts::getParam('sidebar', $data[0]['post'][0]->id): 'yes';
 //        echo $bar;
         $yes = ($bar == 'yes') ? 'selected': '';
         $no = ($bar == 'no') ? 'selected': '';

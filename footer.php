@@ -2,11 +2,17 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    
+                <div class="col-md-3">
+                    <h4>Navigation</h4>
+                    <?php
+                        echo Menus::getMenu('footer', 'list-unstyled', true);
+                    ?>
                 </div>
-                <div class="col-md-4">
-
+                <div class="col-md-5">
+                    <h4>Tags</h4>
+                    <?php
+                        echo Tags::cloud();
+                    ?>
                 </div>
                 <div class="col-md-4">
 
@@ -14,7 +20,7 @@
                 <div class="col-md-12 text-center footer-copyright">
                     <small>Copyright &copy; <?=date('Y');
 ?>, <?=Site::$name;?>. All Rights reserved. 
-                    powered by <a href="http://genixcms.org">GeniXCMS</a></small>
+                    powered by <a href="http://genix.id">GeniXCMS</a></small>
                 </div>
             </div>
         </div>

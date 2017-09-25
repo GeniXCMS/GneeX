@@ -32,13 +32,43 @@
           <div class="col-sm-6 col-md-12">
             <div class="panel panel-red ">
               <div class="panel-heading">
+                <h3 class="panel-title">Recent Comments</h3>
+              </div>
+              <div class="panel-body">
+              <?php
+                echo Comments::recent();
+              ?>
+              </div>
+              
+            </div>
+          </div>
+
+
+          <div class="col-sm-6 col-md-12">
+            <div class="panel panel-red ">
+              <div class="panel-heading">
+                <h3 class="panel-title">Tags</h3>
+              </div>
+              <div class="panel-body">
+              <?php
+                echo Tags::cloud();
+              ?>
+              </div>
+              
+            </div>
+          </div>
+
+
+          <div class="col-sm-6 col-md-12">
+            <div class="panel panel-red ">
+              <div class="panel-heading">
                 <h3 class="panel-title">Related Site</h3>
               </div>
               <div class="panel-body">
                 <ol class="list-unstyled">
-                  <li><a href="https://metalgenix.com">MetalGeniX</a></li>
-                  <li><a href="https://genixcms.org">GeniXCMS</a></li>
-                  <li><a href="https://docs.genixcms.org">GeniXCMS Docs</a></li>
+                  <li><a href="http://metalgenix.com">MetalGeniX</a></li>
+                  <li><a href="http://genix.id">GeniXCMS</a></li>
+                  <li><a href="http://docs.genix.id">GeniXCMS Docs</a></li>
                 </ol>
               </div>
               

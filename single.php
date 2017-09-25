@@ -1,10 +1,4 @@
-    <section id="innerslide">
-        
-        <div class="bg-slide">
-            
-        </div>
 
-    </section>
     <section id="blog">
         <div class="container">
             <?php
@@ -26,7 +20,7 @@
                             );
                             echo '
                                 <article class="blog-post col-md-12">
-                                    <h2><a href="'.Url::post($p->id)."\">$p->title</a></h2>
+                                    <h2 class="title"><a href="'.Url::post($p->id)."\">$p->title</a></h2>
                                     
                                     <span class=\"meta\">posted in <a href=\"".Url::cat($p->cat).'">'.Categories::name($p->cat).'</a>, 
                                     at '.Date::format($p->date).' by <a href="'.Url::author($p->author).'">'.$p->author.'</a></span>

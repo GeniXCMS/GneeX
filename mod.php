@@ -1,16 +1,9 @@
-    <section id="innerslide">
-        
-        <div class="bg-slide">
-            
-        </div>
-
-    </section>
     <section id="blog">
         <div class="container">
             
                 <div class="col-md-8">
                     <div class=" blog-lists clearfix">
-                        <article class="blog-post">
+                        <article class="blog-post col-md-12">
                             <?php
                             if (Gneex::opt('adsense') != '') {
                                 echo '<div class="row"><div class="col-md-12">'.Gneex::opt('adsense').'</div></div><hr />';

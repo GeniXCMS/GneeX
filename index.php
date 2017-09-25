@@ -1,37 +1,6 @@
-    <?php $gneex = Gneex::$opt;?>
-    <section id="frontslide">
-        
-        <div class="bg-slide">
-            
-        </div>
-        <?php
-        if (($gneex['intro_title'] || $gneex['intro_text']) != '') {
-            # code...
-
-        ?>
-        <div class="container" id="front-text">
+<?php $gneex = Gneex::$opt;
 
 
-                <div class="col-md-7 ">
-                <div class="front-textbox">
-                    <h2><span><?=nl2br($gneex['intro_title']); ?></span></h2>
-                    <hr />
-                    <p><span><?=nl2br($gneex['intro_text']); ?></span>
-                    </p>
-                </div>
-                    
-                </div>
-                <div class="col-md-5 front-image">
-                    <?=Gneex::introIg($gneex['intro_image']); ?>
-                </div>
-
-        </div>
-        <?php
-        }
-        ?>
-
-    </section>
-<?php
 if (Gneex::featuredExist()) {
     ?>
     <section id="featured">
@@ -115,13 +84,15 @@ if ($gneex['front_layout'] == 'magazine') {
                             <div class="col-sm-8">
                                 <ul class="list-unstyled">
                                     <?php
+                                if (!isset($post['error'])) {
                                     foreach ($post as $p => $v) {
                                         echo '
                                 <li>
                                 <h5><a href="' . Url::post($v->id) . '">' . $v->title . '</a></h5>
                                 </li>
                                 ';
-                                    } ?>
+                                    } 
+                                }    ?>
                                 </ul>
 
                             </div>
@@ -179,13 +150,15 @@ if ($gneex['front_layout'] == 'magazine') {
                                     <div class="col-md-12">
                                         <ul class="list-unstyled">
                                             <?php
+                                        if (!isset($post['error'])) {
                                             foreach ($post as $p => $v) {
                                                 echo '
                                         <li>
                                         <h5><a href="' . Url::post($v->id) . '">' . $v->title . '</a></h5>
                                         </li>
                                         ';
-                                            } ?>
+                                            } 
+                                        }?>
                                         </ul>
 
                                     </div>
@@ -236,13 +209,15 @@ if ($gneex['front_layout'] == 'magazine') {
                                     <div class="col-md-12">
                                         <ul class="list-unstyled">
                                             <?php
+                                        if (!isset($post['error'])) {
                                             foreach ($post as $p => $v) {
                                                 echo '
                                         <li>
                                         <h5><a href="' . Url::post($v->id) . '">' . $v->title . '</a></h5>
                                         </li>
                                         ';
-                                            } ?>
+                                            } 
+                                        }?>
                                         </ul>
 
                                     </div>
@@ -272,8 +247,8 @@ if ($gneex['front_layout'] == 'magazine') {
                 <div class="row">
 
                     <ul class="list-featured">
-                        <?php
-
+                    <?php
+                    if (!isset($post['error'])) {
 
                         foreach ($post as $p) {
                             $content = Posts::content($p->content);
@@ -293,7 +268,8 @@ if ($gneex['front_layout'] == 'magazine') {
                                 </div>
                                 </a>
                             </li>";
-                        } ?>
+                        } 
+                    }?>
 
                     </ul>
                 </div>
@@ -303,7 +279,7 @@ if ($gneex['front_layout'] == 'magazine') {
                 $cat = $gneex['panel_5'];
                 if (isset($cat) && $cat != ''){
                 $post = Posts::getPostCat($cat, 8);
-                $postig = $post[0]; ?>
+                $postig = !isset($post['error']) ? $post[0]: ''; ?>
 
                 <div class="panel panel-five">
                     <div class="panel-heading">
@@ -315,13 +291,15 @@ if ($gneex['front_layout'] == 'magazine') {
                                 <ul class="list-unstyled">
                                     <?php
                                     unset($post[0]);
+                                if (!isset($post['error'])) {
                                     foreach ($post as $p => $v) {
                                         echo '
                                 <li>
                                 <h5><a href="' . Url::post($v->id) . '">' . $v->title . '</a></h5>
                                 </li>
                                 ';
-                                    } ?>
+                                    } 
+                                }?>
                                 </ul>
 
                             </div>
